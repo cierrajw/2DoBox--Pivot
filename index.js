@@ -9,14 +9,14 @@ $('.card-section').on('click', checkTarget);
 //Functions
 
 function getItems(){
-    console.log("get items");
 
     for(let i=0; i < localStorage.length; i++){
-        console.log("local storage:", localStorage.getItem(localStorage.key(i)));
-        // console.log("i:", i);
 
-        let retrievedItem = localStorage.getItem(key);
-        let parsedItem = JSON.parse(retrievedItem);
+    let retrievedItem = localStorage.getItem(localStorage.key(i));
+
+    let parsedItem = JSON.parse(retrievedItem);
+        
+    newToDoCard(parsedItem);
 
         console.log(parsedItem);
     }
@@ -42,7 +42,7 @@ function getItems(){
     //use key to access object
     //parse pbject with key
     //passs in to make new card
-};
+
 
 
 function NewToDo(){ 
@@ -73,7 +73,7 @@ function submitToDo(event){
 
     var todo = new NewToDo();
 
-    newToDoCard(todo.title, todo.task, todo.id, todo.currentImportance);
+    newToDoCard(todo);
 
     setLocalStorage(todo);
 
@@ -99,15 +99,15 @@ function setLocalStorage(NewToDo){
     // getLocalStorage(cardSerialized);
 }
 
-function newToDoCard(title, task, id, currentImportance){
+function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
-    var newCard = `<article class="posted-card" data-id="${id}">
-                    <h2 class="title-of-card">${title}</h2>
+    var newCard = `<article class="posted-card" data-id="${task.id}">
+                    <h2 class="title-of-card">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
-                    <p class="card-text">${task}</p>
+                    <p class="card-text">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
-                    <p id="quality" class="quality card-text">Quality: <span>${currentImportance}</span></p>
+                    <p class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
                     </article>`
 
     var cardSection = $('.card-section');
@@ -160,7 +160,6 @@ function deleteCard(event){
 //     console.log(getCard);
 //     // newToDoCard(getCard.title);
 // }
-
 
 
 
@@ -249,7 +248,7 @@ function qualityArray() {
 function upVote(event) {
     var qualities = ["swill", "plausible", "genius"];
     var currentQual = $(event.target).nextAll("p").children().text();
-    qualities.indexOf(searchElement[,]);
+    // qualities.indexOf(searchElement[]);
     if(currentQual === qualities[0]) {
         currentQual === qualities[1];
     } else if(currentQual === qualities[1]) {
@@ -261,10 +260,6 @@ function upVote(event) {
 function downVote(event) {
     var qualities = ["swill", "plausible", "genius"];
 };
-
-
-
-
 
 
 
