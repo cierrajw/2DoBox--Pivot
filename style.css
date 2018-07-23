@@ -1,0 +1,124 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto Slab', serif;
+}
+
+.input-section {
+    background-color: #e5f3f2;
+    box-sizing: border-box;
+    height: 300px;
+    margin: 0;
+    text-align: center;
+}
+
+.header-title {
+    color: #6d6e71;
+    display: inline-block;
+    font-size: 275%;
+    margin-bottom:  30px;
+}
+
+.input {
+    align-items: center;
+    display: flex;
+    height: 30px;
+    justify-content: space-between;
+    width: 45%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 100%;
+    margin: auto;
+}
+
+.save-btn {
+    background-color: #00a79d;
+    border: none;
+    color: #fff;
+    font-size: 120%;
+    height: 30px;
+    width: 45.5%;
+}
+
+.save-btn:hover {
+    background-color: #045e55;
+}
+
+.posted-card {
+    border-bottom: 1px solid black;
+    margin: auto;
+    position: relative;
+    width: 45%;
+}
+
+.title-of-card {
+    color: #6D6E71;
+    display: inline-block;
+    font-family: 'Roboto Slab', serif;
+    font-size: 140%;
+}
+
+.card-text {
+    color: #939598;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 100%;
+}
+
+.card-buttons {
+    background-color: transparent;
+    background-size: cover;
+    border: none;
+    height: 20px;
+    width: 20px;
+}
+
+.vote-buttons {
+    background-size: cover;
+    margin-right: 5px; 
+}
+
+.upvote {
+    background-image: url(./images/upvote.svg);
+}
+
+.upvote:hover {
+    background-image: url(./images/upvote-hover.svg);
+}
+
+.downvote {
+    background-image: url(./images/downvote.svg);
+}
+
+.downvote:hover {
+    background-image: url(./images/downvote-hover.svg);
+}
+
+.delete-button {
+    background-image: url(./images/delete.svg);
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+
+.delete-button:hover {
+    background-image: url(./images/delete-hover.svg);
+    background-size: cover;
+    height: 20px;
+    width: 20px;
+}
+
+@media(max-width: 640px){
+
+    .posted-card {
+        width: 85%;
+    }
+
+    #search-input {
+        border: solid #999 1px;
+    }
+}
+
