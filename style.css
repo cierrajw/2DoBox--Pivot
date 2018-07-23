@@ -10,7 +10,7 @@ body {
 }
 
 .input-section {
-    background-color: #e5f3f2;
+    background-color: #525b68;
     box-sizing: border-box;
     height: 300px;
     margin: 0;
@@ -18,7 +18,7 @@ body {
 }
 
 .header-title {
-    color: #6d6e71;
+    color: white;
     display: inline-block;
     font-size: 275%;
     margin-bottom:  30px;

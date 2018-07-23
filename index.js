@@ -1,24 +1,41 @@
-$(window).on('load', getItems)
 
+$(window).on('load', getItems);
 //Event Listeners
 $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
 
+//Functions
 
-function getCard(key) {
-    for(let i = 0; i < localStorage.length; i++) {
-        let retrievedItem = localStorage.getItem([i]);
+function getItems(){
+    console.log("get items");
+
+    for(let i=0; i < localStorage.length; i++){
+        console.log("local storage:", localStorage.getItem(localStorage.key(i)));
+        // console.log("i:", i);
+
+        let retrievedItem = localStorage.getItem(key);
         let parsedItem = JSON.parse(retrievedItem);
+
         console.log(parsedItem);
     }
+}
 
-    $.each(localStorage, getCard);
+// function getItems() { $.each(localStorage, function(key) {
 
-    var cardData = JSON.parse(this);
+//     var cardData = JSON.parse(this);
 
-    newToDoCard(cardData.title, cardData.body, cardData.id, cardData.currentImportance);
+//     newToDoCard(cardData.title, cardData.task, cardData.id, cardData.currentImportance);
+
+//     // this.key
+//     //grabs every key and iterates
+//     //use key to access object
+//     //parse pbject with key
+//     //passs in to make new card
+// });
+// }
+
 
     // this.key
     //grabs every key and iterates
@@ -27,13 +44,14 @@ function getCard(key) {
     //passs in to make new card
 };
 
-//ToDo object
+
 function NewToDo(){ 
 
     this.title = $('.title-input').val();
-    this.body =  $('.body-input').val();
+    this.task =  $('.task-input').val();
     this.id = Date.now();
     this.currentImportance = "Normal";
+
 
     // return {
     //     title: $('.title-input').val(),
@@ -41,28 +59,36 @@ function NewToDo(){
     //     id: Date.now(),
     //     currentImportance: "Normal",
     //     }
+
 }
 
 function submitToDo(event){
-
     event.preventDefault();
+
+    // var cards = $('.card-section')[0].childNodes;
+
+    // if(cards){
+    //     $('.input').prop('disabled', false); 
+    // }
 
     var todo = new NewToDo();
 
-    newToDoCard(todo.title, todo.body, todo.id, todo.currentImportance);
+    newToDoCard(todo.title, todo.task, todo.id, todo.currentImportance);
 
     setLocalStorage(todo);
+
+    // clearToDoFields();
 }
 
-// getLocalStorage(cardSerialized);
+// function clearToDoFields(){
 
+//     $('.title-input').val() = '';
+//     // var task = $('.task-input') = '';
+// }
 
-//Functions
-
-//set local storage of new card
 function setLocalStorage(NewToDo){
 
-    var cardKey = 'todo';
+    var cardKey = NewToDo.id;
 
     var cardSerialized = localStorage.setItem(cardKey, JSON.stringify(NewToDo));
 
@@ -73,13 +99,12 @@ function setLocalStorage(NewToDo){
     // getLocalStorage(cardSerialized);
 }
 
-//Create the ToDo card
-function newToDoCard(title, body, id, currentImportance){
+function newToDoCard(title, task, id, currentImportance){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${id}">
                     <h2 class="title-of-card">${title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
-                    <p class="card-text">${body}</p>
+                    <p class="card-text">${task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="quality" class="quality card-text">Quality: <span>${currentImportance}</span></p>
@@ -112,12 +137,10 @@ function checkTarget(event){
 }
 
 function deleteCard(event){
-    $('deletebutton').closest('article').hide(1000);
-    // $('.delete-button').on('click', function(event){
-    //     console.log("This is it: " + $(this));
-    //     $(this).parent().hide(1000);
-    //     console.log($(this));
-    // });
+
+    var card = $(event.target).closest('article').remove();
+
+    localStorage.removeItem('todo');
 
     if(event.target.className === 'delete-button'){
         alert("Hey u clicked a DELETE button!");
