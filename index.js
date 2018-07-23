@@ -1,12 +1,20 @@
-// var numCards = 0;
-// var quality = "swill";
+$(window).on('load', getItems)
 
 //Event Listeners
 $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
-$.each(localStorage, function(key) {
+
+
+function getCard(key) {
+    for(let i = 0; i < localStorage.length; i++) {
+        let retrievedItem = localStorage.getItem([i]);
+        let parsedItem = JSON.parse(retrievedItem);
+        console.log(parsedItem);
+    }
+
+    $.each(localStorage, getCard);
 
     var cardData = JSON.parse(this);
 
@@ -17,7 +25,7 @@ $.each(localStorage, function(key) {
     //use key to access object
     //parse pbject with key
     //passs in to make new card
-});
+};
 
 //ToDo object
 function NewToDo(){ 
@@ -26,7 +34,6 @@ function NewToDo(){
     this.body =  $('.body-input').val();
     this.id = Date.now();
     this.currentImportance = "Normal";
-
 
     // return {
     //     title: $('.title-input').val(),
@@ -75,7 +82,7 @@ function newToDoCard(title, body, id, currentImportance){
                     <p class="card-text">${body}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
-                    <p class="quality card-text">Quality: <span>${currentImportance}</span></p>
+                    <p id="quality" class="quality card-text">Quality: <span>${currentImportance}</span></p>
                     </article>`
 
     var cardSection = $('.card-section');
@@ -93,12 +100,13 @@ function checkTarget(event){
     }
     else if(event.target.id === 'upvotebutton'){
 
-        alert("Hey u clicked the UPVOTE button!");
-
+        console.log("Hey u clicked the UPVOTE button!");
+        upVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
 
-        alert("Hey u clicked the DOWNVOTE button!");
+        console.log("Hey u clicked the DOWNVOTE button!");
+        downVote(event);
     }
 
 }
@@ -170,6 +178,74 @@ function deleteCard(event){
 // });
 
 
+
+
+//Alex up/downvote buttons
+
+
+// on.("click", qualityArray())
+
+// function qualityArray() {
+//     var qualities = ["swill", "plausible", "genius"];
+//     upVote(qualities);
+//     downVote(qualities);
+// };
+
+// function upVote(quality) {
+//     console.log(quality[0], quality[1], quality[2]);
+//     Once function is run, will iterate once.  ex. quality++, each time 
+//     Take whatever quality is on page, compare it to whatever value you pass through,
+//     then iterate through array to --
+// }
+
+// function qualityVariables() {
+//     var currentQuality = ; $
+// }
+
+// function upVotePlausible() {
+//     if(event.target.className === "upvote" && )
+// };
+
+
+// Add array index[i] to 'p.quality';
+
+
+//Event listener on .card-section to allow for upvoting, downvoting 
+
+//NEW CODE
+
+// $("card-section")on.("click", qualityArray);
+
+function qualityArray() {
+    var qualities = ["swill", "plausible", "genius"];
+    // upVote(qualities);
+    // downVote(qualities);
+};
+
+
+function upVote(event) {
+    var qualities = ["swill", "plausible", "genius"];
+    var currentQual = $(event.target).nextAll("p").children().text();
+    qualities.indexOf(searchElement[,]);
+    if(currentQual === qualities[0]) {
+        currentQual === qualities[1];
+    } else if(currentQual === qualities[1]) {
+        currentQual === qualities[2];
+    }
+    console.log(currentQual);
+}
+
+function downVote(event) {
+    var qualities = ["swill", "plausible", "genius"];
+};
+
+
+
+
+
+
+
+//OLD CODE
 
 // $(".card-section").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
