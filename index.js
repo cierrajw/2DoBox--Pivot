@@ -13,29 +13,14 @@ function getItems(){
 
     let retrievedItem = localStorage.getItem(localStorage.key(i));
 
+    console.log("the storage", localStorage.getItem(localStorage.key(i)));
+
     let parsedItem = JSON.parse(retrievedItem);
         
     newToDoCard(parsedItem);
 
-        console.log(parsedItem);
     }
 }
-
-// function getItems() { $.each(localStorage, function(key) {
-
-//     var cardData = JSON.parse(this);
-
-//     newToDoCard(cardData.title, cardData.task, cardData.id, cardData.currentImportance);
-
-//     // this.key
-//     //grabs every key and iterates
-//     //use key to access object
-//     //parse pbject with key
-//     //passs in to make new card
-// });
-// }
-
-
 
 function NewToDo(){ 
 
@@ -48,11 +33,11 @@ function NewToDo(){
 function submitToDo(event){
     event.preventDefault();
 
-    // var cards = $('.card-section')[0].childNodes;
+    var cards = $('.card-section')[0].childNodes;
 
-    // if(cards){
-    //     $('.input').prop('disabled', false); 
-    // }
+    if(cards){
+        $('.input').prop('disabled', false); 
+    }
 
     var todo = new NewToDo();
 
@@ -63,11 +48,11 @@ function submitToDo(event){
     // clearToDoFields();
 }
 
-// function clearToDoFields(){
+function clearToDoFields(){
 
-//     $('.title-input').val() = '';
-//     // var task = $('.task-input') = '';
-// }
+    // $('.title-input').val() = '';
+    // var task = $('.task-input') = '';
+}
 
 function setLocalStorage(NewToDo){
 
@@ -79,7 +64,8 @@ function setLocalStorage(NewToDo){
 
     console.log("Set and stringified data: " + cardSerialized);
 
-    // getLocalStorage(cardSerialized);
+    getItems();
+
 }
 
 function newToDoCard(task){
@@ -104,7 +90,6 @@ function checkTarget(event){
 
         deleteCard(event);
 
-        // alert("Hey u clicked a DELETE button!");
     }
     else if(event.target.id === 'upvotebutton'){
 
@@ -122,7 +107,7 @@ function deleteCard(event){
 
     var card = $(event.target).closest('article').remove();
 
-    localStorage.removeItem('todo');
+    localStorage.removeItem();
 
     if(event.target.className === 'delete-button'){
         alert("Hey u clicked a DELETE button!");
