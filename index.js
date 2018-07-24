@@ -1,5 +1,5 @@
 
-$(window).on('load', getItems);
+$(window).on('load', getLocalStorage);
 //Event Listeners
 $('.save-btn').on('click', submitToDo);
 
@@ -9,7 +9,7 @@ $('.card-section').on('click', checkTarget);
 //Functions
 
 
-function getItems(){
+function getLocalStorage(){
 
     for(let i=0; i < localStorage.length; i++){
 
@@ -23,7 +23,7 @@ function getItems(){
     }
 }
 
-// function getItems() { $.each(localStorage, function(key) {
+// function getLocalStorage() { $.each(localStorage, function(key) {
 
 //     var cardData = JSON.parse(this);
 
@@ -51,7 +51,7 @@ function NewToDo(){
     this.title = $('.title-input').val();
     this.task =  $('.task-input').val();
     this.id = Date.now();
-    this.currentImportance = "Normal";
+    this.currentImportance = "swill";
 
 
     // return {
@@ -251,15 +251,13 @@ function qualityArray() {
 
 function upVote(event) {
     var qualities = ["swill", "plausible", "genius"];
-    var currentQual = $(event.target).nextAll("p").children().text();
-    // qualities.indexOf(searchElement[]);
-    if(currentQual === qualities[0]) {
-        currentQual === qualities[1];
-    } else if(currentQual === qualities[1]) {
-        currentQual === qualities[2];
-    }
-    console.log(currentQual);
-}
+    var currentQuality = $(event.target).nextAll("p").children().text();
+    for(var i = 0; i < qualities.length; i++) {
+        if(qualities[i] === currentQuality) {
+            $(event.target).nextAll("p").children().text(qualities[i + 1]);
+        };
+    };
+};
 
 function downVote(event) {
     var qualities = ["swill", "plausible", "genius"];
