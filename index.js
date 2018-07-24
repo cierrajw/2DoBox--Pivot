@@ -3,13 +3,18 @@ $(window).on('load', getLocalStorage);
 //Event Listeners
 $('.save-btn').on('click', submitToDo);
 
-$('.card-section').on('click', checkTarget);
+// $('.card-section').on('click', checkTarget);
+$('.card-section').on('click', '#upvotebutton', stuff);
 
-$('.input').on('keyup', checkInput);
+// $('.input').on('keyup', checkInput);
 
 
 //Functions
 
+
+function stuff() {
+    console.log("stuff!!");
+}
 
 function getLocalStorage(){
 
@@ -131,7 +136,7 @@ function checkTarget(event){
     else if(event.target.id === 'upvotebutton'){
 
         console.log("Hey u clicked the UPVOTE button!");
-        storeUpVote(event);
+        storeUpVote(object);
     }
     else if(event.target.id === 'downvotebutton'){
 
@@ -211,29 +216,31 @@ function deleteCard(event){
 
 //NEW CODE
 
-function checkInput(event) {
-    var titleInput = $(".title-input");
-    var taskInput = $(".task-input");
-    var saveBtn = $(".save-btn");
-    if(titleInput.val() === 0 || taskInput.val() === 0) {
-        console.log(taskInput.val())
-       saveBtn.disabled = true;
-    } else {
-       saveBtn.disabled = false;
-    }
-};
+// function checkInput(event) {
+//     var titleInput = $(".title-input");
+//     var taskInput = $(".task-input");
+//     var saveBtn = $(".save-btn");
+//     if(titleInput.val() === 0 || taskInput.val() === 0) {
+//         console.log(taskInput.val())
+//        saveBtn.disabled = true;
+//     } else {
+//        saveBtn.disabled = false;
+//     }
+// };
 
 
 // $("card-section")on.("click", qualityArray);
 
 // Upvote
-function storeUpVote(event) {
+function storeUpVote(object) {
     var clickedArticle = $(event.target).closest(".posted-card");
+    console.log('preparsed: ' + clickedArticle.attr("data-id"));
     var parsedObj = getNParse(clickedArticle.attr("data-id"));
     clickedArticle.find("#importance").text(parsedObj.currentImportance);
+    console.log('this: ' + this);
     upVote(parsedObj);
     stringNSet(parsedObj);
-    console.log("This is theeee" + parsedObj)
+    console.log("This is theeee" + parsedObj);
 };
 
 function upVote(event) {
