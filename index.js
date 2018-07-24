@@ -5,6 +5,8 @@ $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
+$('.input').on('keyup', checkInput);
+
 
 //Functions
 
@@ -209,15 +211,28 @@ function deleteCard(event){
 
 //NEW CODE
 
+function checkInput(event) {
+    var titleInput = $(".title-input");
+    var taskInput = $(".task-input");
+    var saveBtn = $(".save-btn");
+    if(titleInput.val() === 0 || taskInput.val() === 0) {
+        console.log(taskInput.val())
+       saveBtn.disabled = true;
+    } else {
+       saveBtn.disabled = false;
+    }
+};
+
+
 // $("card-section")on.("click", qualityArray);
 
 // Upvote
 function storeUpVote(event) {
     var clickedArticle = $(event.target).closest(".posted-card");
     var parsedObj = getNParse(clickedArticle.attr("data-id"));
+    clickedArticle.find("#importance").text(parsedObj.currentImportance);
     upVote(parsedObj);
     stringNSet(parsedObj);
-    clickedArticle.find("#importance").text(parsedObj.currentImportance);
     console.log("This is theeee" + parsedObj)
 };
 
