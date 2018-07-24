@@ -77,10 +77,10 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-                    <h2 class="title-of-card">${task.title}</h2>
+                    <h2 class="title-of-card" contenteditable="true">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
                     <button class="edit-button">Edit</button>
-                    <p class="card-text">${task.task}</p>
+                    <p class="card-text" contenteditable="true">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
@@ -107,20 +107,23 @@ function checkTarget(event){
         console.log("Hey u clicked the DOWNVOTE button!");
         downVote(event);
     }
-    else if(event.target.className === 'edit-button'){
+    else if(event.target.className === 'title-of-card'){
+        $(this).on('blur', saveEdits);
+
         // alert("woohooo!!!");
-        saveEdits(event);
+        // saveEdits(event);
     }
 
 }
 
 
-
 function saveEdits(event){
 
-var editButton = $(event.target).closest('edit-button');
+    alert("woohooo!!!");
 
-editButton.attr('contenteditable');
+    // var editButton = $(event.target).closest('edit-button');
+
+    // editButton.prop('contenteditable', 'true');
     
 
 }
@@ -177,15 +180,15 @@ function downVote(event) {
 };
 
 // Get & Parse
-function stringNSet(task) {
-    var stringifiedTask = JSON.stringify(task);
-    localStorage.setItem(task.id, stringifiedTask);
+// function stringNSet(task) {
+//     var stringifiedTask = JSON.stringify(task);
+//     localStorage.setItem(task.id, stringifiedTask);
 
-};
+// };
 
-function getNParse(id) {
-    return JSON.parse(localStorage.getItem(id));
-};
+// function getNParse(id) {
+//     return JSON.parse(localStorage.getItem(id));
+// };
 
 
 
