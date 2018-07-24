@@ -262,16 +262,17 @@ function upVote(event) {
 
 function downVote(event) {
     var qualities = ["None", "Low", "Normal", "High", "Critical"];
+    var currentQuality = $(event.target).nextAll("p").children().text();
+    for(var i = 0; i < qualities.length; i++) {
+        if(qualities[i] === currentQuality) {
+            $(event.target).nextAll("p").children().text(qualities[i - 1]);
+        };
+    };
 
 };
 
 function modificationsSetStorage(event) {
-    console.log("Received upvote in local storage");
-    var article = $(event.target).closest("article");
-    var articleId = article.attr("data-id");
-    var articleHTML = article.prop("outerHTML");
-    localStorage.setItem(`id-${articleId}`, JSON.stringify(articleHTML));
-    console.log("Upvote modification made in local storage");
+
 };
 
 
