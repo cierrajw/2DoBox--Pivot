@@ -8,6 +8,7 @@ $('.card-section').on('click', checkTarget);
 
 //Functions
 
+
 function getItems(){
 
     for(let i=0; i < localStorage.length; i++){
@@ -61,6 +62,9 @@ function NewToDo(){
     //     }
 
 }
+
+
+
 
 function submitToDo(event){
     event.preventDefault();
