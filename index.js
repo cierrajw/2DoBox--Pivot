@@ -51,7 +51,7 @@ function NewToDo(){
     this.title = $('.title-input').val();
     this.task =  $('.task-input').val();
     this.id = Date.now();
-    this.currentImportance = "swill";
+    this.currentImportance = "Normal";
 
 
     // return {
@@ -91,7 +91,6 @@ function submitToDo(event){
 // }
 
 function setLocalStorage(NewToDo){
-
     var cardKey = NewToDo.id;
 
     var cardSerialized = localStorage.setItem(cardKey, JSON.stringify(NewToDo));
@@ -250,19 +249,30 @@ function qualityArray() {
 
 
 function upVote(event) {
-    var qualities = ["swill", "plausible", "genius"];
+    var qualities = ["None", "Low", "Normal", "High", "Critical"];
     var currentQuality = $(event.target).nextAll("p").children().text();
     for(var i = 0; i < qualities.length; i++) {
         if(qualities[i] === currentQuality) {
             $(event.target).nextAll("p").children().text(qualities[i + 1]);
         };
+    modificationsSetStorage(currentQuality);
+    // console.log("Sent upvote to local storage");
     };
 };
 
 function downVote(event) {
-    var qualities = ["swill", "plausible", "genius"];
+    var qualities = ["None", "Low", "Normal", "High", "Critical"];
+
 };
 
+function modificationsSetStorage(event) {
+    console.log("Received upvote in local storage");
+    var article = $(event.target).closest("article");
+    var articleId = article.attr("data-id");
+    var articleHTML = article.prop("outerHTML");
+    localStorage.setItem(`id-${articleId}`, JSON.stringify(articleHTML));
+    console.log("Upvote modification made in local storage");
+};
 
 
 //OLD CODE
