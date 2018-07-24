@@ -110,7 +110,7 @@ function newToDoCard(task){
                     <p class="card-text">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
-                    <p class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
+                    <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
                     </article>`
 
     var cardSection = $('.card-section');
@@ -129,7 +129,7 @@ function checkTarget(event){
     else if(event.target.id === 'upvotebutton'){
 
         console.log("Hey u clicked the UPVOTE button!");
-        upVote(event);
+        storeUpVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
 
@@ -205,48 +205,21 @@ function deleteCard(event){
 
 
 
-//Alex up/downvote buttons
-
-
-// on.("click", qualityArray())
-
-// function qualityArray() {
-//     var qualities = ["swill", "plausible", "genius"];
-//     upVote(qualities);
-//     downVote(qualities);
-// };
-
-// function upVote(quality) {
-//     console.log(quality[0], quality[1], quality[2]);
-//     Once function is run, will iterate once.  ex. quality++, each time 
-//     Take whatever quality is on page, compare it to whatever value you pass through,
-//     then iterate through array to --
-// }
-
-// function qualityVariables() {
-//     var currentQuality = ; $
-// }
-
-// function upVotePlausible() {
-//     if(event.target.className === "upvote" && )
-// };
-
-
-// Add array index[i] to 'p.quality';
-
-
 //Event listener on .card-section to allow for upvoting, downvoting 
 
 //NEW CODE
 
 // $("card-section")on.("click", qualityArray);
 
-function qualityArray() {
-    var qualities = ["swill", "plausible", "genius"];
-    // upVote(qualities);
-    // downVote(qualities);
+// Upvote
+function storeUpVote(event) {
+    var clickedArticle = $(event.target).closest(".posted-card");
+    var parsedObj = getNParse(clickedArticle.attr("data-id"));
+    upVote(parsedObj);
+    stringNSet(parsedObj);
+    clickedArticle.find("#importance").text(parsedObj.currentImportance);
+    console.log("This is theeee" + parsedObj)
 };
-
 
 function upVote(event) {
     var qualities = ["None", "Low", "Normal", "High", "Critical"];
@@ -255,11 +228,11 @@ function upVote(event) {
         if(qualities[i] === currentQuality) {
             $(event.target).nextAll("p").children().text(qualities[i + 1]);
         };
-    modificationsSetStorage(currentQuality);
-    // console.log("Sent upvote to local storage");
+    console.log(currentQuality);
     };
 };
 
+// DownVote
 function downVote(event) {
     var qualities = ["None", "Low", "Normal", "High", "Critical"];
     var currentQuality = $(event.target).nextAll("p").children().text();
@@ -271,9 +244,32 @@ function downVote(event) {
 
 };
 
-function modificationsSetStorage(event) {
+// Get & Parse
+function stringNSet(task) {
+    var stringifiedTask = JSON.stringify(task);
+    localStorage.setItem(task.id, stringifiedTask);
 
 };
+
+function getNParse(id) {
+    return JSON.parse(localStorage.getItem(id));
+};
+
+// /     var cardHTML = $(event.target).closest('.card-container');
+// //     var cardHTMLId = cardHTML[0].id;
+// //     var cardObjectInJSON = localStorage.getItem(cardHTMLId);
+// //     var cardObjectInJS = JSON.parse(cardObjectInJSON);
+
+// //     cardObjectInJS.quality = qualityVariable;
+
+// //     var newCardJSON = JSON.stringify(cardObjectInJS);
+// //     localStorage.setItem(cardHTMLId, newCardJSON);
+// //     }
+
+
+
+
+
 
 
 //OLD CODE
