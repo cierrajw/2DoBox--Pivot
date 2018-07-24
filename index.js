@@ -50,7 +50,7 @@ function submitToDo(event){
 
 function clearToDoFields(){
 
-    // $('.title-input').val() = '';
+    $('.title-input').val() = '';
     // var task = $('.task-input') = '';
 }
 
@@ -107,6 +107,8 @@ function deleteCard(event){
 
     var card = $(event.target).closest('article').remove();
 
+    var thecard = 
+
     localStorage.removeItem();
 
     if(event.target.className === 'delete-button'){
@@ -114,35 +116,7 @@ function deleteCard(event){
     }
     console.log("event target:" + event.target.className === 'delete-button');
 
-     // alert("Hey u clicked the CARD SECTION!");
-    // ($event.target).className == ""
-
-    // localStorage.remove
 }
-
-// get local storage of new card
-// function getLocalStorage(cardSerialized){
-
-//     var getCard = JSON.parse(localStorage.getItem(cardSerialized));
-//     console.log(getCard);
-//     // newToDoCard(getCard.title);
-// }
-
-
-
-
-
-
-
-
-// function parseLocalStorage(cardData){
-
-// }
-
-//parse stored card to get it
-// function parseLocalStorage(){
-
-// }
 
 
     // numCards++;
