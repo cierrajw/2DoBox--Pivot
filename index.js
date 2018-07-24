@@ -22,7 +22,7 @@ function getLocalStorage(){
     }
 }
 
-// function getItems() { $.each(localStorage, function(key) {
+// function getLocalStorage() { $.each(localStorage, function(key) {
 
 //     var cardData = JSON.parse(this);
 
@@ -53,6 +53,9 @@ function NewToDo(){
     this.currentImportance = "Normal";
 }
 
+
+
+
 function submitToDo(event){
     event.preventDefault();
 
@@ -78,7 +81,6 @@ function submitToDo(event){
 // }
 
 function setLocalStorage(NewToDo){
-
     var cardKey = NewToDo.id;
 
     var cardSerialized = localStorage.setItem(cardKey, JSON.stringify(NewToDo));
@@ -98,7 +100,7 @@ function newToDoCard(task){
                     <p class="card-text" contenteditable="true">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
-                    <p class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
+                    <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
                     </article>`
 
     var cardSection = $('.card-section');
@@ -117,7 +119,7 @@ function checkTarget(event){
     else if(event.target.id === 'upvotebutton'){
 
         console.log("Hey u clicked the UPVOTE button!");
-        upVote(event);
+        storeUpVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
 
@@ -138,28 +140,72 @@ function deleteCard(event){
     localStorage.removeItem(deleteId);
 }
 
-function qualityArray() {
-    var qualities = ["swill", "plausible", "genius"];
-    // upVote(qualities);
-    // downVote(qualities);
-};
 
+//Event listener on .card-section to allow for upvoting, downvoting 
+
+//NEW CODE
+
+// $("card-section")on.("click", qualityArray);
+
+// Upvote
+function storeUpVote(event) {
+    var clickedArticle = $(event.target).closest(".posted-card");
+    var parsedObj = getNParse(clickedArticle.attr("data-id"));
+    upVote(parsedObj);
+    stringNSet(parsedObj);
+    clickedArticle.find("#importance").text(parsedObj.currentImportance);
+    console.log("This is theeee" + parsedObj)
+};
 
 function upVote(event) {
-    var qualities = ["swill", "plausible", "genius"];
-    var currentQual = $(event.target).nextAll("p").children().text();
-    // qualities.indexOf(searchElement[]);
-    if(currentQual === qualities[0]) {
-        currentQual === qualities[1];
-    } else if(currentQual === qualities[1]) {
-        currentQual === qualities[2];
-    }
-    console.log(currentQual);
-}
-
-function downVote(event) {
-    var qualities = ["swill", "plausible", "genius"];
+    var qualities = ["None", "Low", "Normal", "High", "Critical"];
+    var currentQuality = $(event.target).nextAll("p").children().text();
+    for(var i = 0; i < qualities.length; i++) {
+        if(qualities[i] === currentQuality) {
+            $(event.target).nextAll("p").children().text(qualities[i + 1]);
+        };
+    console.log(currentQuality);
+    };
 };
+
+// DownVote
+function downVote(event) {
+    var qualities = ["None", "Low", "Normal", "High", "Critical"];
+    var currentQuality = $(event.target).nextAll("p").children().text();
+    for(var i = 0; i < qualities.length; i++) {
+        if(qualities[i] === currentQuality) {
+            $(event.target).nextAll("p").children().text(qualities[i - 1]);
+        };
+    };
+
+};
+
+// Get & Parse
+function stringNSet(task) {
+    var stringifiedTask = JSON.stringify(task);
+    localStorage.setItem(task.id, stringifiedTask);
+
+};
+
+function getNParse(id) {
+    return JSON.parse(localStorage.getItem(id));
+};
+
+// /     var cardHTML = $(event.target).closest('.card-container');
+// //     var cardHTMLId = cardHTML[0].id;
+// //     var cardObjectInJSON = localStorage.getItem(cardHTMLId);
+// //     var cardObjectInJS = JSON.parse(cardObjectInJSON);
+
+// //     cardObjectInJS.quality = qualityVariable;
+
+// //     var newCardJSON = JSON.stringify(cardObjectInJS);
+// //     localStorage.setItem(cardHTMLId, newCardJSON);
+// //     }
+
+
+
+
+
 
 
     // numCards++;
