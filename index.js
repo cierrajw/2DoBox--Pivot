@@ -5,6 +5,13 @@ $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
+// $('.card-section').on('blur', saveEdits);
+
+
+// jquery on event delegation, listen to specific items in the card, and use 'this'
+
+// reassign body property of data model to the new thing they entered
+
 
 //Functions
 
@@ -22,29 +29,6 @@ function getLocalStorage(){
     }
 }
 
-// function getLocalStorage() { $.each(localStorage, function(key) {
-
-//     var cardData = JSON.parse(this);
-
-//     newToDoCard(cardData.title, cardData.task, cardData.id, cardData.currentImportance);
-
-//     // this.key
-//     //grabs every key and iterates
-//     //use key to access object
-//     //parse pbject with key
-//     //passs in to make new card
-// });
-// }
-
-
-    // this.key
-    //grabs every key and iterates
-    //use key to access object
-    //parse pbject with key
-    //passs in to make new card
-
-
-
 function NewToDo(){ 
 
     this.title = $('.title-input').val();
@@ -52,8 +36,6 @@ function NewToDo(){
     this.id = Date.now();
     this.currentImportance = "Normal";
 }
-
-
 
 
 function submitToDo(event){
@@ -74,11 +56,11 @@ function submitToDo(event){
     // clearToDoFields();
 }
 
-// function clearToDoFields(){
+function clearToDoFields(){
 
-//     $('.title-input').val() = '';
-//     // var task = $('.task-input') = '';
-// }
+    // $('.title-input').val() = '';
+    // var task = $('.task-input') = '';
+}
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
@@ -95,9 +77,10 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-                    <h2 class="title-of-card" contenteditable="true">${task.title}</h2>
+                    <h2 class="title-of-card">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
-                    <p class="card-text" contenteditable="true">${task.task}</p>
+                    <button class="edit-button">Edit</button>
+                    <p class="card-text">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
@@ -113,8 +96,6 @@ function checkTarget(event){
     if (event.target.id === 'deletebutton'){
 
         deleteCard(event);
-
-        // alert("Hey u clicked a DELETE button!");
     }
     else if(event.target.id === 'upvotebutton'){
 
@@ -126,6 +107,21 @@ function checkTarget(event){
         console.log("Hey u clicked the DOWNVOTE button!");
         downVote(event);
     }
+    else if(event.target.className === 'edit-button'){
+        // alert("woohooo!!!");
+        saveEdits(event);
+    }
+
+}
+
+
+
+function saveEdits(event){
+
+var editButton = $(event.target).closest('edit-button');
+
+editButton.attr('contenteditable');
+    
 
 }
 
@@ -190,21 +186,6 @@ function stringNSet(task) {
 function getNParse(id) {
     return JSON.parse(localStorage.getItem(id));
 };
-
-// /     var cardHTML = $(event.target).closest('.card-container');
-// //     var cardHTMLId = cardHTML[0].id;
-// //     var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-// //     var cardObjectInJS = JSON.parse(cardObjectInJSON);
-
-// //     cardObjectInJS.quality = qualityVariable;
-
-// //     var newCardJSON = JSON.stringify(cardObjectInJS);
-// //     localStorage.setItem(cardHTMLId, newCardJSON);
-// //     }
-
-
-
-
 
 
 

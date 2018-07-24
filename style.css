@@ -17,6 +17,11 @@ body {
     text-align: center;
 }
 
+.edit-button{
+    float: right;
+    margin-top: 40px;
+}
+
 .header-title {
     color: white;
     display: inline-block;
