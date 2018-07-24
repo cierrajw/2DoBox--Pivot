@@ -3,18 +3,14 @@ $(window).on('load', getLocalStorage);
 //Event Listeners
 $('.save-btn').on('click', submitToDo);
 
-// $('.card-section').on('click', checkTarget);
-$('.card-section').on('click', '#upvotebutton', stuff);
+$('.card-section').on('click', checkTarget);
+
 
 // $('.input').on('keyup', checkInput);
 
 
 //Functions
 
-
-function stuff() {
-    console.log("stuff!!");
-}
 
 function getLocalStorage(){
 
@@ -136,7 +132,7 @@ function checkTarget(event){
     else if(event.target.id === 'upvotebutton'){
 
         console.log("Hey u clicked the UPVOTE button!");
-        storeUpVote(object);
+        storeUpVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
 
@@ -232,7 +228,7 @@ function deleteCard(event){
 // $("card-section")on.("click", qualityArray);
 
 // Upvote
-function storeUpVote(object) {
+function storeUpVote(event) {
     var clickedArticle = $(event.target).closest(".posted-card");
     console.log('preparsed: ' + clickedArticle.attr("data-id"));
     var parsedObj = getNParse(clickedArticle.attr("data-id"));
