@@ -120,7 +120,7 @@ function saveEdits(event){
 
 var editButton = $(event.target).closest('edit-button');
 
-editButton.attr('contenteditable');
+editButton.prop('contenteditable', 'true');
     
 
 }
