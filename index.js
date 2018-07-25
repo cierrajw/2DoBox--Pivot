@@ -77,10 +77,10 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-                    <h2 class="title-of-card">${task.title}</h2>
+                    <h2 class="title-of-card" contenteditable="true" data-title="${task.title}">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
                     <button class="edit-button">Edit</button>
-                    <p class="card-text">${task.task}</p>
+                    <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
@@ -91,7 +91,6 @@ function newToDoCard(task){
 }
 
 function checkTarget(event){
-
 
     if (event.target.id === 'deletebutton'){
 
@@ -107,21 +106,31 @@ function checkTarget(event){
         console.log("Hey u clicked the DOWNVOTE button!");
         downVote(event);
     }
-    else if(event.target.className === 'edit-button'){
-        // alert("woohooo!!!");
-        saveEdits(event);
+    else if(event.target.className === 'title-of-card' || 'card-task'){
+        $(this).on('keydown', saveEdits);
+
     }
-
 }
-
 
 
 function saveEdits(event){
 
-var editButton = $(event.target).closest('edit-button');
+var title = $(event.target).closest('title-of-card');
 
-editButton.attr('contenteditable');
-    
+// console.log("the thing: ", $(event.target).closest('title-of-card'));
+
+
+var tehtitle = title.prop('dataset').title;
+
+console.log("The awesome title thing: ", tehtitle);
+
+// console.log("The property trying to get: " , tehtitle);
+
+    console.log("saved edits!!!");
+    // var editButton = $(event.target).closest('edit-button');
+
+    // editButton.prop('contenteditable', 'true');
+     
 
 }
 
@@ -130,6 +139,8 @@ function deleteCard(event){
     var card = $(event.target).closest('article');
 
     card.remove();
+
+    console.log("The REAL dataset:", card.prop('dataset'));
 
     var deleteId = card.prop('dataset').id;
 
@@ -177,15 +188,15 @@ function downVote(event) {
 };
 
 // Get & Parse
-function stringNSet(task) {
-    var stringifiedTask = JSON.stringify(task);
-    localStorage.setItem(task.id, stringifiedTask);
+// function stringNSet(task) {
+//     var stringifiedTask = JSON.stringify(task);
+//     localStorage.setItem(task.id, stringifiedTask);
 
-};
+// };
 
-function getNParse(id) {
-    return JSON.parse(localStorage.getItem(id));
-};
+// function getNParse(id) {
+//     return JSON.parse(localStorage.getItem(id));
+// };
 
 
 
