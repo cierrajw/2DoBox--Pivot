@@ -53,14 +53,20 @@ function submitToDo(event){
 
     setLocalStorage(todo);
 
-    // clearToDoFields();
+    clearToDoFields();
 }
 
-function clearToDoFields(){
 
-    // $('.title-input').val() = '';
-    // var task = $('.task-input') = '';
+function clearToDoFields() {
+
+    $('.title-input').val('');
+    console.log("title cleared!");
+    $('.task-input').val('');
+    console.log("task cleared!");
 }
+
+
+
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
@@ -77,6 +83,7 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
+
                     <h2 class="title-of-card" contenteditable="true" data-title="${task.title}">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
                     <button class="edit-button">Edit</button>
@@ -107,6 +114,7 @@ function checkTarget(event){
         downVote(event);
     }
     else if(event.target.className === 'title-of-card' || 'card-task'){
+
         $(this).on('keydown', saveEdits);
 
     }
@@ -132,6 +140,7 @@ console.log("The awesome title thing: ", tehtitle);
     // editButton.prop('contenteditable', 'true');
      
 
+
 }
 
 function deleteCard(event){
@@ -148,11 +157,6 @@ function deleteCard(event){
 }
 
 
-//Event listener on .card-section to allow for upvoting, downvoting 
-
-//NEW CODE
-
-// $("card-section")on.("click", qualityArray);
 
 // Upvote
 function storeUpVote(event) {
@@ -186,34 +190,3 @@ function downVote(event) {
     };
 
 };
-
-// Get & Parse
-// function stringNSet(task) {
-//     var stringifiedTask = JSON.stringify(task);
-//     localStorage.setItem(task.id, stringifiedTask);
-
-// };
-
-// function getNParse(id) {
-//     return JSON.parse(localStorage.getItem(id));
-// };
-
-
-
-    // numCards++;
-
-//     $( ".card-section" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
-
-
-// $('.save-btn').on('click', function(event) {
-//     event.preventDefault();
-//     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-//        return false;
-//     };  
-
-//     numCards++;
-//     $( ".card-section" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-//     localStoreCard();
-//     $('form')[0].reset();
-// });
