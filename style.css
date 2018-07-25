@@ -13,7 +13,7 @@ body {
     background-color: #525b68;
     box-sizing: border-box;
     height: 300px;
-    margin: 0;
+    margin: 0 0 1.5rem;
     text-align: center;
 }
 
@@ -32,18 +32,19 @@ body {
 .input {
     align-items: center;
     display: flex;
-    height: 30px;
-    justify-content: space-between;
-    width: 45%;
     font-family: 'Open Sans', sans-serif;
     font-size: 100%;
+    height: 30px;
+    justify-content: space-between;
     margin: auto;
+    width: 45%;
 }
 
 .save-btn {
     background-color: #00a79d;
     border: none;
     color: #fff;
+    cursor: pointer;
     font-size: 120%;
     height: 30px;
     width: 45.5%;
@@ -51,6 +52,12 @@ body {
 
 .save-btn:hover {
     background-color: #045e55;
+    cursor: pointer;
+}
+
+.save-btn:disabled {
+    background-color: #BBB7B7;
+    cursor: auto;
 }
 
 .posted-card {
@@ -116,6 +123,29 @@ body {
     width: 20px;
 }
 
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.75rem auto 1.25rem;
+}
+
+.quality {
+    width: 50%;
+    margin: 0;
+}
+
+.completed-button {
+    background-color: #DF3701D4;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 80%;
+}
+
+
+
+
 @media(max-width: 640px){
 
     .posted-card {
@@ -125,5 +155,28 @@ body {
     #search-input {
         border: solid #999 1px;
     }
+
+    .input {
+        width: 85%;     
+    }
+
+    .save-btn {
+        width: 85%;
+    }
 }
 
+@media(max-width: 440px){
+
+    .header-title {
+        font-size: 200%;
+        margin: 20px 0;
+    }
+
+    .input {
+        height: 40px;
+    }
+
+    .save-btn {
+        height: 45px;
+    }
+}
