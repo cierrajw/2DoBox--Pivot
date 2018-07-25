@@ -56,7 +56,7 @@ body {
 }
 
 .save-btn:disabled {
-    background-color: #23241F;
+    background-color: #BBB7B7;
     cursor: auto;
 }
 
