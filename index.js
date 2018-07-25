@@ -111,13 +111,15 @@ function newToDoCard(task){
                     <div class="search-area">
                     <h2 class="title-of-card" contenteditable="true" data-title="${task.title}">${task.title}</h2>
                         <button id="deletebutton" class="delete-button card-buttons" aria-label="delete"></button>
-                        <button class="edit-button">Edit</button>
                         <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
                     </div>
 
                     <button id="upvotebutton" class="upvote card-buttons" aria-label="upvote"></button>
                     <button id="downvotebutton" class="downvote card-buttons" aria-label="downvote"></button>
+                    <div class="card-bottom">
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
+                    <button class="completed-button" aria-label="completed">Completed</button>
+                    </div>
                     </article>`
 
     var cardSection = $('.card-section');

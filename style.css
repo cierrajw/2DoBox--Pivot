@@ -123,6 +123,29 @@ body {
     width: 20px;
 }
 
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.75rem auto 1.25rem;
+}
+
+.quality {
+    width: 50%;
+    margin: 0;
+}
+
+.completed-button {
+    background-color: #DF3701D4;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 80%;
+}
+
+
+
+
 @media(max-width: 640px){
 
     .posted-card {
