@@ -5,7 +5,7 @@ $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
-$('form').on('keyup', enableSave);
+$('form').on('keyup', enableDisableSave);
 
 // $('.card-section').on('blur', saveEdits);
 
@@ -43,12 +43,6 @@ function NewToDo(){
 function submitToDo(event){
     event.preventDefault();
 
-    // var cards = $('.card-section')[0].childNodes;
-
-    // if(cards){
-    //     $('.input').prop('disabled', false); 
-    // }
-
     var todo = new NewToDo();
 
     newToDoCard(todo);
@@ -58,32 +52,15 @@ function submitToDo(event){
     clearToDoFields();
 };
 
-// Do we need these????
-// function checkInputs(event) {
-//     event.preventDefault();
-//     if(event.target.className === ".title-input.input" || ".task-input.input") {
-//         enableSave();
-//     }
-// };
-
-// Why won't this work?!?!?!
-// function saveButtonEnable() {
-    // var titleInput = $('.title-input');
-    // var taskInput = $('.task-input');
-//     if(titleInput.val() != "" || taskInput.val() != "") {
-//         $('.save-btn').prop( 'disabled', false );
-//         console.log("you're almost there");
-//     } else { 
-//         $('.save-btn').prop( 'disabled', true );
-//     };
-// };
-
-function enableSave() {
+function enableDisableSave() {
     var titleInput = $('.title-input');    
     var taskInput = $('.task-input');
     var submit = $('.save-btn');
-    var isDisabled = (!titleInput || !taskInput);
-    submit.prop('disabled', isDisabled);
+    if(titleInput.val() == '' || taskInput.val() == '') {
+        submit.prop('disabled', true);
+    } else {
+        submit.prop('disabled', false);
+    };
 };
 
 function clearToDoFields() {
@@ -91,7 +68,16 @@ function clearToDoFields() {
     console.log("title cleared!");
     $('.task-input').val('');
     console.log("task cleared!");
+    enableDisableSave();
 };
+
+// function enableSave2 () {
+//     var titleInput = $('.title-input');    
+//     var taskInput = $('.task-input');
+//     var submit = $('.save-btn');
+//     var isDisabled = (!titleInput || !taskInput);
+//     submit.prop('disabled', isDisabled);
+// };
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
