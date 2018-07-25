@@ -1,6 +1,7 @@
+//Event Listeners
 
 $(window).on('load', getLocalStorage);
-//Event Listeners
+
 $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
@@ -11,27 +12,20 @@ $('#search-input').on('keyup', filterSearch);
 
 
 function filterSearch() {
-    console.log("search filter commencing");
-    var card = $('posted-card');
-    card.filter(function(index) {
-        var searchTerms = $('#search-input').val();
-        var titleText = $(this).find('h2').text().toLowerCase();
-        var bodyText = $(this).find('.card-task').text().toLowerCase();
-        if(titleText.includes(searchTerms) || bodyText.includes(searchTerms)) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        };
-    });
+
+var lowerCaseInput = $('#search-input').val().toLowerCase();
+$('.search-area').each(function() {
+    if($(this).text().toLowerCase().indexOf(lowerCaseInput) >= 0) {
+        $(this).parent().slideDown();
+    } else {
+        $(this).parent().slideUp();
+    };
+});
 };
 
 
 
-
-
-
-
-// $('.card-section').on('blur', saveEdits);
+$('.card-section').on('blur', saveEdits);
 
 
 // jquery on event delegation, listen to specific items in the card, and use 'this'
@@ -99,14 +93,6 @@ function clearToDoFields() {
 
 
 
-// function enableSave2 () {
-//     var titleInput = $('.title-input');    
-//     var taskInput = $('.task-input');
-//     var submit = $('.save-btn');
-//     var isDisabled = (!titleInput || !taskInput);
-//     submit.prop('disabled', isDisabled);
-// };
-
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
 
@@ -122,11 +108,13 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-
+                    <div class="search-area">
                     <h2 class="title-of-card" contenteditable="true" data-title="${task.title}">${task.title}</h2>
-                    <button id="deletebutton" class="delete-button card-buttons" aria-label="delete"></button>
-                    <button class="edit-button">Edit</button>
-                    <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
+                        <button id="deletebutton" class="delete-button card-buttons" aria-label="delete"></button>
+                        <button class="edit-button">Edit</button>
+                        <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
+                    </div>
+
                     <button id="upvotebutton" class="upvote card-buttons" aria-label="upvote"></button>
                     <button id="downvotebutton" class="downvote card-buttons" aria-label="downvote"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
