@@ -53,14 +53,18 @@ function submitToDo(event){
 
     setLocalStorage(todo);
 
-    // clearToDoFields();
+    clearToDoFields();
 }
 
-function clearToDoFields(){
 
-    // $('.title-input').val() = '';
-    // var task = $('.task-input') = '';
+function clearToDoFields() {
+
+    $('.title-input').val('');
+    console.log("title cleared!");
+    $('.task-input').val('');
+    console.log("task cleared!");
 }
+
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
@@ -77,10 +81,10 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-                    <h2 class="title-of-card">${task.title}</h2>
+                    <h2 class="title-of-card" contenteditable>${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
                     <button class="edit-button">Edit</button>
-                    <p class="card-text">${task.task}</p>
+                    <p class="card-task" contenteditable>${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
@@ -107,20 +111,26 @@ function checkTarget(event){
         console.log("Hey u clicked the DOWNVOTE button!");
         downVote(event);
     }
-    else if(event.target.className === 'edit-button'){
-        // alert("woohooo!!!");
-        saveEdits(event);
-    }
+    else if(event.target.className === 'title-of-card' || 'card-task'){
+        $(this).on('keydown', checkEnterKey).on('blur', saveEdits);
 
-}
+
+        // saveEdits(event);
+    };
+};
+
+function checkEnterKey() {
+    //check whether the key pressed
+};
+
 
 
 
 function saveEdits(event){
+        console.log("saved edits!!!");
+// var editButton = $(event.target).closest('edit-button');
 
-var editButton = $(event.target).closest('edit-button');
-
-editButton.prop('contenteditable', 'true');
+// editButton.prop('contenteditable', 'true');
     
 
 }
