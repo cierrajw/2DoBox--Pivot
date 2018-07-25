@@ -66,6 +66,8 @@ function clearToDoFields() {
 }
 
 
+
+
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
 
