@@ -5,6 +5,8 @@ $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
+$('form').on('keyup', checkInputs);
+
 // $('.card-section').on('blur', saveEdits);
 
 
@@ -26,8 +28,8 @@ function getLocalStorage(){
     newToDoCard(parsedItem);
 
         console.log(parsedItem);
-    }
-}
+    };
+};
 
 function NewToDo(){ 
 
@@ -35,7 +37,7 @@ function NewToDo(){
     this.task =  $('.task-input').val();
     this.id = Date.now();
     this.currentImportance = "Normal";
-}
+};
 
 
 function submitToDo(event){
@@ -54,19 +56,41 @@ function submitToDo(event){
     setLocalStorage(todo);
 
     clearToDoFields();
-}
+};
 
+function checkInputs(event) {
+    event.preventDefault();
+    if(event.target.className === ".title-input.input" || ".task-input.input") {
+        enableSave();
+    }
+};
+
+// Why won't this work?!?!?!
+// function saveButtonEnable() {
+    // var titleInput = $('.title-input');
+    // var taskInput = $('.task-input');
+//     if(titleInput.val() != "" || taskInput.val() != "") {
+//         $('.save-btn').prop( 'disabled', false );
+//         console.log("you're almost there");
+//     } else { 
+//         $('.save-btn').prop( 'disabled', true );
+//     };
+// };
+
+function enableSave() {
+        var titleInput = $('.title-input');
+    var taskInput = $('.task-input');
+    var submit = $('.save-btn');
+  var isDisabled = (!titleInput || !taskInput);
+  submit.prop('disabled', isDisabled);
+};
 
 function clearToDoFields() {
-
     $('.title-input').val('');
     console.log("title cleared!");
     $('.task-input').val('');
     console.log("task cleared!");
-}
-
-
-
+};
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
@@ -78,7 +102,7 @@ function setLocalStorage(NewToDo){
     console.log("Set and stringified data: " + cardSerialized);
 
     // getLocalStorage(cardSerialized);
-}
+};
 
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
@@ -95,7 +119,7 @@ function newToDoCard(task){
 
     var cardSection = $('.card-section');
     cardSection.prepend(newCard);
-}
+};
 
 function checkTarget(event){
 
@@ -117,8 +141,8 @@ function checkTarget(event){
 
         $(this).on('keydown', saveEdits);
 
-    }
-}
+    };
+};
 
 
 function saveEdits(event){
@@ -139,9 +163,7 @@ console.log("The awesome title thing: ", tehtitle);
 
     // editButton.prop('contenteditable', 'true');
      
-
-
-}
+};
 
 function deleteCard(event){
 
@@ -154,7 +176,7 @@ function deleteCard(event){
     var deleteId = card.prop('dataset').id;
 
     localStorage.removeItem(deleteId);
-}
+};
 
 
 
