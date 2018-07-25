@@ -109,9 +109,11 @@ function saveEdits(event){
 
 var title = $(event.target).closest('.title-of-card');
 
-var titleID = title.parent();
+var titleID = title.parent().id;
 
 var titleInnerHTML = title[0].innerHTML;
+
+console.log("The inner HTML: ", titleInnerHTML);
 
 var retrieved2do = localStorage.getItem(titleID);
 
@@ -136,8 +138,6 @@ localStorage.setItem(titleID, stringifiedToDo);
  // console.log(newCardId);
 
 
-
-console.log("The inner HTML: ", titleInnerHTML);
 
      
 }
