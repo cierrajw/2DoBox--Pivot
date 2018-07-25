@@ -47,10 +47,17 @@ body {
     font-size: 120%;
     height: 30px;
     width: 45.5%;
+    cursor: pointer;
 }
 
 .save-btn:hover {
     background-color: #045e55;
+    cursor: pointer;
+}
+
+.save-btn:disabled {
+    background-color: #23241F;
+    cursor: auto;
 }
 
 .posted-card {

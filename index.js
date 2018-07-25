@@ -5,7 +5,7 @@ $('.save-btn').on('click', submitToDo);
 
 $('.card-section').on('click', checkTarget);
 
-$('form').on('keyup', checkInputs);
+$('form').on('keyup', enableSave);
 
 // $('.card-section').on('blur', saveEdits);
 
@@ -58,12 +58,13 @@ function submitToDo(event){
     clearToDoFields();
 };
 
-function checkInputs(event) {
-    event.preventDefault();
-    if(event.target.className === ".title-input.input" || ".task-input.input") {
-        enableSave();
-    }
-};
+// Do we need these????
+// function checkInputs(event) {
+//     event.preventDefault();
+//     if(event.target.className === ".title-input.input" || ".task-input.input") {
+//         enableSave();
+//     }
+// };
 
 // Why won't this work?!?!?!
 // function saveButtonEnable() {
@@ -78,11 +79,11 @@ function checkInputs(event) {
 // };
 
 function enableSave() {
-        var titleInput = $('.title-input');
+    var titleInput = $('.title-input');    
     var taskInput = $('.task-input');
     var submit = $('.save-btn');
-  var isDisabled = (!titleInput || !taskInput);
-  submit.prop('disabled', isDisabled);
+    var isDisabled = (!titleInput || !taskInput);
+    submit.prop('disabled', isDisabled);
 };
 
 function clearToDoFields() {
