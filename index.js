@@ -83,10 +83,11 @@ function setLocalStorage(NewToDo){
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
     var newCard = `<article class="posted-card" data-id="${task.id}">
-                    <h2 class="title-of-card" contenteditable>${task.title}</h2>
+
+                    <h2 class="title-of-card" contenteditable="true" data-title="${task.title}">${task.title}</h2>
                     <button id="deletebutton" class="delete-button card-buttons"></button>
                     <button class="edit-button">Edit</button>
-                    <p class="card-task" contenteditable>${task.task}</p>
+                    <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
                     <button id="upvotebutton" class="upvote card-buttons"></button>
                     <button id="downvotebutton" class="downvote card-buttons"></button>
                     <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
@@ -97,7 +98,6 @@ function newToDoCard(task){
 }
 
 function checkTarget(event){
-
 
     if (event.target.id === 'deletebutton'){
 
@@ -114,26 +114,32 @@ function checkTarget(event){
         downVote(event);
     }
     else if(event.target.className === 'title-of-card' || 'card-task'){
-        $(this).on('keydown', checkEnterKey).on('blur', saveEdits);
 
+        $(this).on('keydown', saveEdits);
 
-        // saveEdits(event);
-    };
-};
-
-function checkEnterKey() {
-    //check whether the key pressed
-};
-
-
+    }
+}
 
 
 function saveEdits(event){
-        console.log("saved edits!!!");
-// var editButton = $(event.target).closest('edit-button');
 
-// editButton.prop('contenteditable', 'true');
-    
+var title = $(event.target).closest('title-of-card');
+
+// console.log("the thing: ", $(event.target).closest('title-of-card'));
+
+
+var tehtitle = title.prop('dataset').title;
+
+console.log("The awesome title thing: ", tehtitle);
+
+// console.log("The property trying to get: " , tehtitle);
+
+    console.log("saved edits!!!");
+    // var editButton = $(event.target).closest('edit-button');
+
+    // editButton.prop('contenteditable', 'true');
+     
+
 
 }
 
@@ -143,17 +149,14 @@ function deleteCard(event){
 
     card.remove();
 
+    console.log("The REAL dataset:", card.prop('dataset'));
+
     var deleteId = card.prop('dataset').id;
 
     localStorage.removeItem(deleteId);
 }
 
 
-//Event listener on .card-section to allow for upvoting, downvoting 
-
-//NEW CODE
-
-// $("card-section")on.("click", qualityArray);
 
 // Upvote
 function storeUpVote(event) {
@@ -187,34 +190,3 @@ function downVote(event) {
     };
 
 };
-
-// Get & Parse
-function stringNSet(task) {
-    var stringifiedTask = JSON.stringify(task);
-    localStorage.setItem(task.id, stringifiedTask);
-
-};
-
-function getNParse(id) {
-    return JSON.parse(localStorage.getItem(id));
-};
-
-
-
-    // numCards++;
-
-//     $( ".card-section" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
-
-
-// $('.save-btn').on('click', function(event) {
-//     event.preventDefault();
-//     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-//        return false;
-//     };  
-
-//     numCards++;
-//     $( ".card-section" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-//     localStoreCard();
-//     $('form')[0].reset();
-// });
