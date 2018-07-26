@@ -10,6 +10,10 @@ $('form').on('keyup', enableDisableSave);
 
 $('#search-input').on('keyup', filterSearch);
 
+$('.card-section').on('keyup', '.title-of-card', saveTitleEdit);
+
+$('.card-section').on('keyup', '.card-task', saveTaskEdit);
+
 
 function filterSearch() {
 
@@ -23,15 +27,6 @@ $('.search-area').each(function() {
 });
 };
 
-
-
-
-
-// jquery on event delegation, listen to specific items in the card, and use 'this'
-
-// reassign body property of data model to the new thing they entered
-
-
 //Functions
 
 function getLocalStorage(){
@@ -44,7 +39,6 @@ function getLocalStorage(){
         
     newToDoCard(parsedItem);
 
-    // console.log(parsedItem);
     }
 }
 
@@ -88,18 +82,10 @@ function clearToDoFields() {
     enableDisableSave();
 };
 
-
-
-
-
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
 
     var cardSerialized = localStorage.setItem(cardKey, JSON.stringify(NewToDo));
-
-    // console.log("Set and stringified data: " + cardSerialized);
-
-    // getLocalStorage(cardSerialized);
 };
 
 function newToDoCard(task){
@@ -158,8 +144,9 @@ function checkTarget(event){
 
 
 // }
-//don't delete for now... but delete before eval
-$('.card-section').on('keyup', '.title-of-card', function() {
+
+function saveTitleEdit(){
+
     var titleID = $(this).parent().parent().prop('id');
 
     var title = $(event.target).closest('.title-of-card');
@@ -172,10 +159,12 @@ $('.card-section').on('keyup', '.title-of-card', function() {
 
     localStorage.setItem(titleID, stringifiedTitle);
 
-    console.log('hello', parsedTitle)
-});
+    console.log('hello', parsedTitle);
 
-$('.card-section').on('keyup', '.card-task', function() {
+}
+
+function saveTaskEdit(){
+
     var taskID = $(this).parent().parent().prop('id');
 
     var task = $(event.target).closest('.card-task');
@@ -187,44 +176,8 @@ $('.card-section').on('keyup', '.card-task', function() {
     var stringifiedTask = JSON.stringify(parsedTask);
 
     localStorage.setItem(taskID, stringifiedTask);
-});
 
-// function saveEdits(event){
-
-// var title = $(event.target).closest('.title-of-card');
-
-// var titleID = $(this).parent().parent().prop('id');
-// console.log('id', titleID)
-
-// var titleInnerHTML = title[0].innerHTML;
-
-// // console.log("The inner HTML: ", titleInnerHTML);
-
-// var retrieved2do = localStorage.getItem(titleID);
-
-// parsedToDo = JSON.parse(retrieved2do);
-
-// var editedIdea = {
-//     title: titleInnerHTML,
-//     id: Date.now()
-// }
-
-// var stringifiedToDo = JSON.stringify(editedIdea);
-
-// localStorage.setItem(titleID, stringifiedToDo);
-
-// // var originalData = title.prop('dataset').thetitle;
-
-
-// //give edited title an id
-
-//  // var newCardId = $(event.target).closest().attr('id');
-
-//  // console.log(newCardId);
-     
-// }
-
-
+}
 
 function deleteCard(event){
 
