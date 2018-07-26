@@ -19,10 +19,8 @@ $('.search-area').each(function() {
     } else {
         $(this).parent().slideUp();
     };
-    });
+});
 };
-
-//Functions
 
 function getLocalStorage(){
     for(var i=0; i < localStorage.length; i++){
@@ -104,27 +102,26 @@ function checkTarget(event){
 };
 
 function saveTitleEdit(){
-
-    var titleID = $(this).parent().parent().prop('id');
+    var titleId = $(this).parent().parent().prop('id');
     var title = $(event.target).closest('.title-of-card');
     var titleInnerHTML = title[0].innerHTML;
-    var retrievedTitle = localStorage.getItem(titleID);
+    var retrievedTitle = localStorage.getItem(titleId);
     parsedTitle = JSON.parse(retrievedTitle);
     parsedTitle.title = titleInnerHTML;
     var stringifiedTitle = JSON.stringify(parsedTitle);
-    localStorage.setItem(titleID, stringifiedTitle);
+    localStorage.setItem(titleId, stringifiedTitle);
 };
 
 function saveTaskEdit(){
 
-    var taskID = $(this).parent().parent().prop('id');
+    var taskId = $(this).parent().parent().prop('id');
     var task = $(event.target).closest('.card-task');
     var taskInnerHTML = task[0].innerHTML;
-    var retrievedTask = localStorage.getItem(taskID);
+    var retrievedTask = localStorage.getItem(taskId);
     parsedTask = JSON.parse(retrievedTask);
     parsedTask.task = taskInnerHTML;
     var stringifiedTask = JSON.stringify(parsedTask);
-    localStorage.setItem(taskID, stringifiedTask);
+    localStorage.setItem(taskId, stringifiedTask);
 };
 
 function deleteCard(event){
@@ -155,7 +152,7 @@ function upVote(object, event) {
     for(var i = 0; i < ranking.length; i++) {
         if(ranking[i] === currentImportance) {
             updatedRanking = ranking[i + 1];
-            $(event.target).nextAll('div').children('p').children('span').text(ranking[i + 1]);
+            $(event.target).nextAll('div').children('p').children('span').text(updatedRanking);
         };
     };
     object.currentImportance = updatedRanking;
@@ -169,7 +166,7 @@ function downVote(object, event) {
     for(var i = 0; i < ranking.length; i++) {
         if(ranking[i] === currentImportance) {
             updatedRanking = ranking[i - 1];
-            $(event.target).nextAll('div').children('p').children('span').text(ranking[i - 1]);
+            $(event.target).nextAll('div').children('p').children('span').text(updatedRanking);
         };
     };
     object.currentImportance = updatedRanking;
