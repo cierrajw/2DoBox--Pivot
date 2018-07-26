@@ -6,6 +6,11 @@ $('.card-section').on('click', checkTarget);
 $('form').on('keyup', enableDisableSave);
 $('#search-input').on('keyup', filterSearch);
 
+$('.card-section').on('keyup', '.title-of-card', saveTitleEdit);
+
+$('.card-section').on('keyup', '.card-task', saveTaskEdit);
+
+//Functions
 
 function filterSearch() {
 
@@ -16,10 +21,8 @@ $('.search-area').each(function() {
     } else {
         $(this).parent().slideUp();
     };
-});
+    });
 };
-
-
 
 //Functions
 
@@ -32,13 +35,11 @@ function getLocalStorage(){
 };
 
 function NewToDo(){ 
-
     this.id = Date.now();
     this.title = $('.title-input').val();
     this.task =  $('.task-input').val();
     this.currentImportance = "Normal";
 };
-
 
 function submitToDo(event){
     event.preventDefault();
@@ -64,8 +65,6 @@ function clearToDoFields() {
     $('.task-input').val('');
     enableDisableSave();
 };
-
-
 
 function setLocalStorage(NewToDo){
     var cardKey = NewToDo.id;
@@ -102,42 +101,33 @@ function checkTarget(event){
         storeUpVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
-        storeDownVote(event);
-    };
+      storeDownVote(event);
+    }
 };
 
+function saveTitleEdit(){
 
-$('.card-section').on('keyup', '.title-of-card', function(e) {
-    trueEnter(e)
     var titleID = $(this).parent().parent().prop('id');
-
     var title = $(event.target).closest('.title-of-card');
     var titleInnerHTML = title[0].innerHTML;
-    var retrieved2do = localStorage.getItem(titleID);
-    parsedToDo = JSON.parse(retrieved2do);
-    parsedToDo.title = titleInnerHTML;
-
-    var stringifiedToDo = JSON.stringify(parsedToDo);
-
-    localStorage.setItem(titleID, stringifiedToDo);
-});
-
-
-function saveEdits(event){
-var title = $(event.target).closest('.title-of-card');
-var titleID = $(this).parent().parent().prop('id');
-var titleInnerHTML = title[0].innerHTML;
-var retrieved2do = localStorage.getItem(titleID);
-parsedToDo = JSON.parse(retrieved2do);
-var editedIdea = {
-    title: titleInnerHTML,
-    id: Date.now()
-};
-var stringifiedToDo = JSON.stringify(editedIdea);
-localStorage.setItem(titleID, stringifiedToDo);
+    var retrievedTitle = localStorage.getItem(titleID);
+    parsedTitle = JSON.parse(retrievedTitle);
+    parsedTitle.title = titleInnerHTML;
+    var stringifiedTitle = JSON.stringify(parsedTitle);
+    localStorage.setItem(titleID, stringifiedTitle);
 };
 
+function saveTaskEdit(){
 
+    var taskID = $(this).parent().parent().prop('id');
+    var task = $(event.target).closest('.card-task');
+    var taskInnerHTML = task[0].innerHTML;
+    var retrievedTask = localStorage.getItem(taskID);
+    parsedTask = JSON.parse(retrievedTask);
+    parsedTask.task = taskInnerHTML;
+    var stringifiedTask = JSON.stringify(parsedTask);
+    localStorage.setItem(taskID, stringifiedTask);
+};
 
 function deleteCard(event){
     var card = $(event.target).closest('article');
@@ -146,23 +136,19 @@ function deleteCard(event){
     localStorage.removeItem(deleteId);
 };
 
-
-// Upvote
-
 function storeUpVote(event) {
     var cardId = $(event.target).closest(".posted-card").prop("id");
-    var thing = localStorage.getItem(cardId);
-    var parsedObject = JSON.parse(thing);
+    var retrievedCard = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(retrievedCard);
     upVote(parsedObject, event, cardId);
 };
 
 function storeDownVote(event) {
     var cardId = $(event.target).closest(".posted-card").prop("id");
-    var thing = localStorage.getItem(cardId);
-    var parsedObject = JSON.parse(thing);
+    var retrievedCard = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(retrievedCard);
     downVote(parsedObject, event, cardId);
 };
-
 
 function upVote(object, event) {
     var ranking = ["None", "Low", "Normal", "High", "Critical"];
@@ -191,3 +177,4 @@ function downVote(object, event) {
     object.currentImportance = updatedRanking;
     var stringifiedObj = localStorage.setItem(object.id, JSON.stringify(object));
 };
+
