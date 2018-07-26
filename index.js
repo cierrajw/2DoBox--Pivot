@@ -25,7 +25,7 @@ $('.search-area').each(function() {
 
 
 
-$('.card-section').on('blur', saveEdits);
+
 
 // jquery on event delegation, listen to specific items in the card, and use 'this'
 
@@ -44,7 +44,7 @@ function getLocalStorage(){
         
     newToDoCard(parsedItem);
 
-    console.log(parsedItem);
+    // console.log(parsedItem);
     }
 }
 
@@ -82,9 +82,9 @@ function enableDisableSave() {
 
 function clearToDoFields() {
     $('.title-input').val('');
-    console.log("title cleared!");
+    // console.log("title cleared!");
     $('.task-input').val('');
-    console.log("task cleared!");
+    // console.log("task cleared!");
     enableDisableSave();
 };
 
@@ -97,17 +97,17 @@ function setLocalStorage(NewToDo){
 
     var cardSerialized = localStorage.setItem(cardKey, JSON.stringify(NewToDo));
 
-    console.log("Set and stringified data: " + cardSerialized);
+    // console.log("Set and stringified data: " + cardSerialized);
 
     // getLocalStorage(cardSerialized);
 };
 
 function newToDoCard(task){
     // console.log("This:" + Object.keys(this));
-    var newCard = `<article class="posted-card" data-id="${task.id}">
+    var newCard = `<article class="posted-card" data-id="${task.id}" id="${task.id}">
 
                     <div class="search-area">
-                    <h2 class="title-of-card" contenteditable="true" data-thetitle="${task.title}">${task.title}</h2>
+                        <h2 class="title-of-card" contenteditable="true" data-thetitle="${task.title}">${task.title}</h2>
                         <button id="deletebutton" class="delete-button card-buttons" aria-label="delete"></button>
                         <p class="card-task" contenteditable="true" data-task="${task.task}">${task.task}</p>
                     </div>
@@ -143,15 +143,53 @@ function checkTarget(event){
     }
 }
 
+
+
+// $('.title-of-card').on('keyup', checkKey) 
+
+// // .on('blur', saveEdits);
+
+// function checkKey(event) {
+//     console.log('checkKey linked')
+//   if (trueEnter(event)) saveEdits(event);
+// };
+
+// function trueEnter(event) {
+//   if (event.which === 13 && event.shiftKey === false) {
+//     $(event.target).blur();
+//     return true;
+//   };
+// };
+
+//don't delete for now... but delete before eval
+$('.card-section').on('keyup', '.title-of-card', function() {
+    var titleID = $(this).parent().parent().prop('id');
+
+    var title = $(event.target).closest('.title-of-card');
+    var titleInnerHTML = title[0].innerHTML;
+    var retrieved2do = localStorage.getItem(titleID);
+    parsedToDo = JSON.parse(retrieved2do);
+    parsedToDo.title = titleInnerHTML;
+
+    var stringifiedToDo = JSON.stringify(parsedToDo);
+
+    localStorage.setItem(titleID, stringifiedToDo);
+
+    console.log('hello', parsedToDo)
+
+
+})
+
 function saveEdits(event){
 
 var title = $(event.target).closest('.title-of-card');
 
-var titleID = title.parent().id;
+var titleID = $(this).parent().parent().prop('id');
+console.log('id', titleID)
 
 var titleInnerHTML = title[0].innerHTML;
 
-console.log("The inner HTML: ", titleInnerHTML);
+// console.log("The inner HTML: ", titleInnerHTML);
 
 var retrieved2do = localStorage.getItem(titleID);
 
@@ -183,7 +221,7 @@ function deleteCard(event){
 
     var card = $(event.target).closest('article');
 
-    console.log("The card object: ", card);
+    // console.log("The card object: ", card);
 
     card.remove();
 
