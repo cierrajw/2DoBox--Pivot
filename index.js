@@ -1,13 +1,9 @@
 //Event Listeners
 
 $(window).on('load', getLocalStorage);
-
 $('.save-btn').on('click', submitToDo);
-
 $('.card-section').on('click', checkTarget);
-
 $('form').on('keyup', enableDisableSave);
-
 $('#search-input').on('keyup', filterSearch);
 
 $('.card-section').on('keyup', '.title-of-card', saveTitleEdit);
@@ -28,10 +24,12 @@ $('.search-area').each(function() {
     });
 };
 
+//Functions
+
 function getLocalStorage(){
-    for(let i=0; i < localStorage.length; i++){
-    let retrievedItem = localStorage.getItem(localStorage.key(i));
-    let parsedItem = JSON.parse(retrievedItem);      
+    for(var i=0; i < localStorage.length; i++){
+    var retrievedItem = localStorage.getItem(localStorage.key(i));
+    var parsedItem = JSON.parse(retrievedItem);
     newToDoCard(parsedItem);
     };
 };
@@ -42,7 +40,6 @@ function NewToDo(){
     this.task =  $('.task-input').val();
     this.currentImportance = "Normal";
 };
-
 
 function submitToDo(event){
     event.preventDefault();
@@ -97,7 +94,6 @@ function newToDoCard(task){
 };
 
 function checkTarget(event){
-
     if (event.target.id === 'deletebutton'){
         deleteCard(event);
     }
@@ -105,10 +101,9 @@ function checkTarget(event){
         storeUpVote(event);
     }
     else if(event.target.id === 'downvotebutton'){
-        downVote(event);
+      storeDownVote(event);
     }
 };
-
 
 function saveTitleEdit(){
 
@@ -140,3 +135,46 @@ function deleteCard(event){
     var deleteId = card.prop('dataset').id;
     localStorage.removeItem(deleteId);
 };
+
+function storeUpVote(event) {
+    var cardId = $(event.target).closest(".posted-card").prop("id");
+    var retrievedCard = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(retrievedCard);
+    upVote(parsedObject, event, cardId);
+};
+
+function storeDownVote(event) {
+    var cardId = $(event.target).closest(".posted-card").prop("id");
+    var retrievedCard = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(retrievedCard);
+    downVote(parsedObject, event, cardId);
+};
+
+function upVote(object, event) {
+    var ranking = ["None", "Low", "Normal", "High", "Critical"];
+    var updatedRanking;
+    var currentImportance = $(event.target).nextAll('div').children('p').children('span').text();
+    for(var i = 0; i < ranking.length; i++) {
+        if(ranking[i] === currentImportance) {
+            updatedRanking = ranking[i + 1];
+            $(event.target).nextAll('div').children('p').children('span').text(ranking[i + 1]);
+        };
+    };
+    object.currentImportance = updatedRanking;
+    var stringifiedObj = localStorage.setItem(object.id, JSON.stringify(object));
+};
+
+function downVote(object, event) {
+    var ranking = ["None", "Low", "Normal", "High", "Critical"];
+    var updatedRanking;
+    var currentImportance = $(event.target).nextAll('div').children('p').children('span').text();
+    for(var i = 0; i < ranking.length; i++) {
+        if(ranking[i] === currentImportance) {
+            updatedRanking = ranking[i - 1];
+            $(event.target).nextAll('div').children('p').children('span').text(ranking[i - 1]);
+        };
+    };
+    object.currentImportance = updatedRanking;
+    var stringifiedObj = localStorage.setItem(object.id, JSON.stringify(object));
+};
+
