@@ -84,7 +84,7 @@ function newToDoCard(task){
                     <button id="downvotebutton" class="downvote card-buttons" aria-label="downvote"></button>
                     <div class="card-bottom">
 
-                    <p id="importance" class="quality card-text">Quality: <span>${task.currentImportance}</span></p>
+                    <p id="importance" class="quality card-text">Importance: <span>${task.currentImportance}</span></p>
                     <button class="completed-button" aria-label="completed">Completed</button>
                     </div>
                     </article>`
