@@ -139,15 +139,10 @@ function checkTarget(event){
         downVote(event);
     }
     else if(event.target.className === 'title-of-card'){
-        $(this).on('keyup', saveEdits);
+        // $(this).on('keyup', saveTitle);
     }
 }
 
-
-
-// $('.title-of-card').on('keyup', checkKey) 
-
-// // .on('blur', saveEdits);
 
 // function checkKey(event) {
 //     console.log('checkKey linked')
@@ -161,59 +156,73 @@ function checkTarget(event){
 //   };
 // };
 
+
+// }
 //don't delete for now... but delete before eval
 $('.card-section').on('keyup', '.title-of-card', function() {
     var titleID = $(this).parent().parent().prop('id');
 
     var title = $(event.target).closest('.title-of-card');
     var titleInnerHTML = title[0].innerHTML;
-    var retrieved2do = localStorage.getItem(titleID);
-    parsedToDo = JSON.parse(retrieved2do);
-    parsedToDo.title = titleInnerHTML;
+    var retrievedTitle = localStorage.getItem(titleID);
+    parsedTitle = JSON.parse(retrievedTitle);
+    parsedTitle.title = titleInnerHTML;
 
-    var stringifiedToDo = JSON.stringify(parsedToDo);
+    var stringifiedTitle = JSON.stringify(parsedTitle);
 
-    localStorage.setItem(titleID, stringifiedToDo);
+    localStorage.setItem(titleID, stringifiedTitle);
 
-    console.log('hello', parsedToDo)
+    console.log('hello', parsedTitle)
+});
+
+$('.card-section').on('keyup', '.card-task', function() {
+    var taskID = $(this).parent().parent().prop('id');
+
+    var task = $(event.target).closest('.card-task');
+    var taskInnerHTML = task[0].innerHTML;
+    var retrievedTask = localStorage.getItem(taskID);
+    parsedTask = JSON.parse(retrievedTask);
+    parsedTask.task = taskInnerHTML;
+
+    var stringifiedTask = JSON.stringify(parsedTask);
+
+    localStorage.setItem(taskID, stringifiedTask);
+});
+
+// function saveEdits(event){
+
+// var title = $(event.target).closest('.title-of-card');
+
+// var titleID = $(this).parent().parent().prop('id');
+// console.log('id', titleID)
+
+// var titleInnerHTML = title[0].innerHTML;
+
+// // console.log("The inner HTML: ", titleInnerHTML);
+
+// var retrieved2do = localStorage.getItem(titleID);
+
+// parsedToDo = JSON.parse(retrieved2do);
+
+// var editedIdea = {
+//     title: titleInnerHTML,
+//     id: Date.now()
+// }
+
+// var stringifiedToDo = JSON.stringify(editedIdea);
+
+// localStorage.setItem(titleID, stringifiedToDo);
+
+// // var originalData = title.prop('dataset').thetitle;
 
 
-})
+// //give edited title an id
 
-function saveEdits(event){
+//  // var newCardId = $(event.target).closest().attr('id');
 
-var title = $(event.target).closest('.title-of-card');
-
-var titleID = $(this).parent().parent().prop('id');
-console.log('id', titleID)
-
-var titleInnerHTML = title[0].innerHTML;
-
-// console.log("The inner HTML: ", titleInnerHTML);
-
-var retrieved2do = localStorage.getItem(titleID);
-
-parsedToDo = JSON.parse(retrieved2do);
-
-var editedIdea = {
-    title: titleInnerHTML,
-    id: Date.now()
-}
-
-var stringifiedToDo = JSON.stringify(editedIdea);
-
-localStorage.setItem(titleID, stringifiedToDo);
-
-// var originalData = title.prop('dataset').thetitle;
-
-
-//give edited title an id
-
- // var newCardId = $(event.target).closest().attr('id');
-
- // console.log(newCardId);
+//  // console.log(newCardId);
      
-}
+// }
 
 
 
