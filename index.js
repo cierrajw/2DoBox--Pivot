@@ -136,7 +136,7 @@ function checkTarget(event){
     }
     else if(event.target.id === 'downvotebutton'){
         console.log("Hey u clicked the DOWNVOTE button!");
-        downVote(event);
+        storeDownVote(event);
     }
     else if(event.target.className === 'title-of-card'){
         $(this).on('keyup', saveEdits);
@@ -145,24 +145,25 @@ function checkTarget(event){
 
 
 
-// $('.title-of-card').on('keyup', checkKey) 
+$('.title-of-card').on('keyup', checkKey); 
 
-// // .on('blur', saveEdits);
+// .on('blur', saveEdits);
 
-// function checkKey(event) {
-//     console.log('checkKey linked')
-//   if (trueEnter(event)) saveEdits(event);
-// };
+function checkKey(event) {
+    console.log('checkKey linked')
+  if (trueEnter(event)) saveEdits(event);
+};
 
-// function trueEnter(event) {
-//   if (event.which === 13 && event.shiftKey === false) {
-//     $(event.target).blur();
-//     return true;
-//   };
-// };
+function trueEnter(event) {
+  if (event.which === 13 && event.shiftKey === false) {
+    $(event.target).blur();
+    return true;
+  };
+};
 
 //don't delete for now... but delete before eval
-$('.card-section').on('keyup', '.title-of-card', function() {
+$('.card-section').on('keyup', '.title-of-card', function(e) {
+    trueEnter(e)
     var titleID = $(this).parent().parent().prop('id');
 
     var title = $(event.target).closest('.title-of-card');
@@ -177,8 +178,8 @@ $('.card-section').on('keyup', '.title-of-card', function() {
 
     console.log('hello', parsedToDo)
 
+});
 
-})
 
 function saveEdits(event){
 
@@ -231,27 +232,64 @@ function deleteCard(event){
 };
 
 
-
 // Upvote
-// function storeUpVote(event) {
-//     var clickedArticle = $(event.target).closest(".posted-card");
-//     var parsedObj = getNParse(clickedArticle.attr("data-id"));
-//     upVote(parsedObj);
-//     stringNSet(parsedObj);
-//     clickedArticle.find("#importance").text(parsedObj.currentImportance);
-//     console.log("This is theeee" + parsedObj)
-// };
 
-// function upVote(event) {
-//     var qualities = ["None", "Low", "Normal", "High", "Critical"];
-//     var currentQuality = $(event.target).nextAll("p").children().text();
-//     for(var i = 0; i < qualities.length; i++) {
-//         if(qualities[i] === currentQuality) {
-//             $(event.target).nextAll("p").children().text(qualities[i + 1]);
-//         };
-//     console.log(currentQuality);
-//     };
-// };
+function storeUpVote(event) {
+    var cardId = $(event.target).closest(".posted-card").prop("id");
+    var thing = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(thing);
+
+    // var parsedObj = getNParse(clickedArticle.attr("data-id")).;
+    upVote(parsedObject, event, cardId);
+    // stringNSet(parsedObj);
+    // clickedArticle.find("#importance").text(parsedObj.currentImportance);
+    console.log("This is theeee", cardId, 'object', parsedObject);
+};
+
+function storeDownVote(event) {
+    var cardId = $(event.target).closest(".posted-card").prop("id");
+    var thing = localStorage.getItem(cardId);
+    var parsedObject = JSON.parse(thing);
+
+    // var parsedObj = getNParse(clickedArticle.attr("data-id")).;
+    downVote(parsedObject, event, cardId);
+    // stringNSet(parsedObj);
+    // clickedArticle.find("#importance").text(parsedObj.currentImportance);
+    console.log("This is theeee", cardId, 'object', parsedObject);
+};
+
+
+function upVote(object, event) {
+    var ranking = ["None", "Low", "Normal", "High", "Critical"];
+    var updatedRanking;
+    var currentImportance = $(event.target).nextAll('div').children('p').children('span').text();
+    for(var i = 0; i < ranking.length; i++) {
+        if(ranking[i] === currentImportance) {
+            updatedRanking = ranking[i + 1];
+            $(event.target).nextAll('div').children('p').children('span').text(ranking[i + 1]);
+        };
+    };
+    object.currentImportance = updatedRanking;
+    var stringifiedObj = localStorage.setItem(object.id, JSON.stringify(object));
+};
+
+function downVote(object, event) {
+    var ranking = ["None", "Low", "Normal", "High", "Critical"];
+    var updatedRanking;
+    var currentImportance = $(event.target).nextAll('div').children('p').children('span').text();
+    console.log(event.target);
+    for(var i = 0; i < ranking.length; i++) {
+        if(ranking[i] === currentImportance) {
+            updatedRanking = ranking[i - 1];
+            $(event.target).nextAll('div').children('p').children('span').text(ranking[i - 1]);
+        };
+    };
+    object.currentImportance = updatedRanking;
+    var stringifiedObj = localStorage.setItem(object.id, JSON.stringify(object));
+};
+
+
+
 
 // DownVote
 // function downVote(event) {
@@ -264,3 +302,7 @@ function deleteCard(event){
 //     };
 
 // };
+
+    // setLocalStorage(object.id, object);
+
+    //local storage set item(object.id, object) with our obejct.id as the key
