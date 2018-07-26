@@ -5,9 +5,7 @@ $('.save-btn').on('click', submitToDo);
 $('.card-section').on('click', checkTarget);
 $('form').on('keyup', enableDisableSave);
 $('#search-input').on('keyup', filterSearch);
-
 $('.card-section').on('keyup', '.title-of-card', saveTitleEdit);
-
 $('.card-section').on('keyup', '.card-task', saveTaskEdit);
 
 //Functions
